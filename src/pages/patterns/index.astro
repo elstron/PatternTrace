@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DemoShell from "../../components/demo/DemoShell.astro";
+
+import { meta as observer } from "../../patterns/observer/meta";
+import { meta as adapter } from "../../patterns/adapter/meta";
+import { meta as factory } from "../../patterns/factory/meta";
+import { meta as bridge } from "../../patterns/bridge/meta";
+
+const groups = [
+  {
+    title: "Creacionales",
+    patterns: [{ ...factory, href: "/patterns/factory" }],
+  },
+  {
+    title: "Estructurales",
+    patterns: [
+      { ...adapter, href: "/patterns/adapter" },
+      { ...bridge, href: "/patterns/bridge" },
+    ],
+  },
+  {
+    title: "Comportamiento",
+    patterns: [{ ...observer, href: "/patterns/observer" }],
+  },
+];
+---
+
+<BaseLayout title="Patrones de diseño">
+  <DemoShell
+    title="Patrones de diseño"
+    description={`Un mini-lab de patrones con demos visuales. Agrega nuevos patrones creando otra carpeta en <code>src/patterns</code>.`}
+  >
+    <div class="groups">
+      {groups.map((g) => (
+        <section class="group">
+          <h2 class="groupTitle">{g.title}</h2>
+          <div class="gridCards">
+            {g.patterns.map((p) => (
+              <a class="cardLink panel" href={p.href}>
+                <div class="row" style="justify-content: space-between; align-items:center;">
+                  <b>{p.title}</b>
+                  <span class="pill">ver</span>
+                </div>
+                <p style="margin-top: 8px;">Ruta: <code>{p.href}</code></p>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </DemoShell>
+</BaseLayout>
+
+<style>
+  .groups {
+    display: grid;
+    gap: 22px;
+  }
+
+  .groupTitle {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .gridCards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 860px) {
+    .gridCards { grid-template-columns: 1fr; }
+  }
+
+  .cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .pill {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--muted);
+    background: rgba(0,0,0,.12);
+  }
+</style>

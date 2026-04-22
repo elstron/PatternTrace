@@ -1,0 +1,65 @@
+---
+const {
+  title = "Ejemplo del patrón (TypeScript / JavaScript)",
+  subtitle = "",
+  note = "",
+  fileTs = "example.ts",
+  fileJs = "example.js",
+  idPrefix = "",
+} = Astro.props;
+
+const p = idPrefix ? `${idPrefix}-` : "";
+---
+
+<section class="panel codePanel">
+  <div class="title" style="margin-bottom: 6px;">
+    <h2 style="margin:0; font-size:16px;">{title}</h2>
+    <span class="badge">código</span>
+  </div>
+  {
+    subtitle
+      ? <p style="margin: 0 0 10px; color: var(--muted);" set:html={subtitle} />
+      : null
+  }
+
+  <div class="tabs">
+  <button class="tabBtn active" id={`${p}tabTs`}>TypeScript</button>
+  <button class="tabBtn" id={`${p}tabJs`}>JavaScript</button>
+  </div>
+
+  <div class="codeTop">
+  <span class="hint" id={`${p}codeCaption`}>{fileTs}</span>
+  <button id={`${p}btnCopyCode`}>Copiar código</button>
+  </div>
+
+  <pre class="code language-typescript"><code id={`${p}codeBlock`} class="language-typescript"></code></pre>
+  {
+    note
+      ? <div class="smallNote" set:html={note} />
+      : null
+  }
+</section>
+
+<style>
+  .codePanel { margin-top: 14px; }
+  .tabs { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .tabBtn { padding: 8px 10px; border-radius: 10px; }
+  .tabBtn.active { background: rgba(93,214,255,.22); border-color: rgba(93,214,255,.35); }
+
+  .codeTop { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 10px 0; }
+
+  pre.code {
+    margin: 0;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(0,0,0,.28);
+    overflow: auto;
+    max-height: 420px;
+    color: rgba(230,238,252,.92);
+    line-height: 1.35;
+    font-size: 12.5px;
+  }
+
+  .smallNote { color: var(--muted); font-size: 13px; margin-top: 8px; }
+</style>

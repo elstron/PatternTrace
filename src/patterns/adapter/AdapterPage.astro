@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DemoShell from "../../components/demo/DemoShell.astro";
+import DemoGrid from "../../components/demo/DemoGrid.astro";
+import CodeSection from "../../components/CodeSection.astro";
+
+import AdapterDescription from "../../components/patterns/adapter/AdapterDescription.astro";
+import AdapterDiagram from "../../components/patterns/adapter/AdapterDiagram.astro";
+import AdapterDemo from "../../components/patterns/adapter/AdapterDemo.astro";
+
+import { meta } from "./meta";
+---
+
+<BaseLayout title={meta.pageTitle}>
+  <DemoShell title={meta.title}>
+    <AdapterDescription />
+
+    <AdapterDiagram />
+
+    <DemoGrid>
+      <AdapterDemo />
+      <CodeSection
+        idPrefix="adapter"
+        title="Ejemplo del patrón (Adapter)"
+        subtitle='El cliente depende de <b>Target</b>. <b>Adapter</b> implementa Target y delega en <b>Adaptee</b>.'
+        note='En JS/TS lo clave es que <code>Adapter</code> tiene la misma interfaz que <code>Target</code> y traduce la llamada hacia <code>Adaptee</code>.'
+        fileTs="adapter.ts"
+        fileJs="adapter.js"
+      />
+    </DemoGrid>
+
+    <script src="/vendor/prism-lite.js" is:inline></script>
+    <script>
+        import "../../scripts/patterns/adapter-logic.js";
+    </script>
+
+    <!-- Código para el panel de ejemplo (Adapter). Lo lee adapter-logic.js -->
+    <script type="application/json" id="adapterCodeTs">
+      {
+        "code": "// adapter.ts\n\n// Target: lo que el cliente espera\ninterface Target {\n  request(): string;\n}\n\n// Adaptee: API legacy/incompatible\nclass Adaptee {\n  specificRequest(): string {\n    return \"[[raw: legacy-data]]\";\n  }\n}\n\n// Adapter: implementa Target y traduce hacia Adaptee\nclass Adapter implements Target {\n  constructor(private adaptee: Adaptee) {}\n\n  request(): string {\n    const raw = this.adaptee.specificRequest();\n    return raw.replace(\"[[raw:\", \"\").replace(\"]]\", \"\").trim();\n  }\n}\n\n// Client\nfunction clientCode(target: Target) {\n  console.log(target.request());\n}\n\nclientCode(new Adapter(new Adaptee()));\n"
+      }
+    </script>
+    <script type="application/json" id="adapterCodeJs">
+      {
+        "code": "// adapter.js\n\n// Adaptee (legacy)\nclass Adaptee {\n  specificRequest() {\n    return \"[[raw: legacy-data]]\";\n  }\n}\n\n// Adapter (Target-compatible)\nclass Adapter {\n  constructor(adaptee) {\n    this.adaptee = adaptee;\n  }\n\n  request() {\n    const raw = this.adaptee.specificRequest();\n    return raw.replace(\"[[raw:\", \"\").replace(\"]]\", \"\").trim();\n  }\n}\n\nfunction clientCode(target) {\n  console.log(target.request());\n}\n\nclientCode(new Adapter(new Adaptee()));\n"
+      }
+    </script>
+  </DemoShell>
+</BaseLayout> 

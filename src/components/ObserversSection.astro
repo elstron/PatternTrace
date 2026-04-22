@@ -1,0 +1,55 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">Observers</h2>
+    <span class="badge">update(state)</span>
+  </div>
+
+  <div class="observers" id="observerList"></div>
+</section>
+
+<style>
+  .observers { display: grid; gap: 10px; }
+
+  /* Los .card/.status/.msg los genera JS dentro de #observerList */
+  :global(#observerList .card) {
+    background: color-mix(in oklab, var(--card) 92%, black);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  :global(#observerList .cardHeader) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  :global(#observerList .cardHeader b) { font-size: 14px; }
+
+  :global(#observerList .status) {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--muted);
+    background: rgba(0,0,0,.15);
+  }
+
+  :global(#observerList .status.on) {
+    color: var(--accent);
+    border-color: rgba(93,214,255,.35);
+    background: rgba(93,214,255,.10);
+  }
+
+  :global(#observerList .msg) {
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px dashed rgba(255,255,255,.14);
+    color: var(--muted);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+</style>

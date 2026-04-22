@@ -1,0 +1,78 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">Subject</h2>
+    <span class="badge">notifica()</span>
+  </div>
+
+  <div class="subjectBox">
+    <div class="valueLine">
+      <strong>Estado actual</strong>
+      <span id="currentValue" class="valuePill">(vacío)</span>
+    </div>
+
+    <div class="row">
+      <input id="newValue" type="text" placeholder="Escribe un nuevo estado… (ej: 'Precio: 120')" />
+      <button class="primary" id="btnUpdate">Actualizar + Notificar</button>
+    </div>
+
+    <div class="row">
+      <button id="btnRandom">Estado aleatorio</button>
+      <button id="btnClearLog">Limpiar log</button>
+    </div>
+
+    <div id="log" class="log"></div>
+  </div>
+</section>
+
+<style>
+  .subjectBox { display: grid; gap: 10px; }
+
+  .valueLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 12px;
+  }
+
+  .valueLine strong {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .valuePill {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(92,255,138,.10);
+    border: 1px solid rgba(92,255,138,.25);
+    color: var(--ok);
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .log {
+    margin-top: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    padding: 10px;
+    color: rgba(230,238,252,.88);
+    max-height: 220px;
+    overflow: auto;
+  }
+
+  .log :global(.muted) { color: rgba(159,178,214,.85); }
+
+  :global(.flash) { animation: flash .6s ease; }
+  @keyframes flash {
+    0% { box-shadow: 0 0 0 rgba(93,214,255,0); }
+    30% { box-shadow: 0 0 0 6px rgba(93,214,255,.18); }
+    100% { box-shadow: 0 0 0 rgba(93,214,255,0); }
+  }
+</style>

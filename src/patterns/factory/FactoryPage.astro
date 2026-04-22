@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DemoShell from "../../components/demo/DemoShell.astro";
+import DemoGrid from "../../components/demo/DemoGrid.astro";
+import CodeSection from "../../components/CodeSection.astro";
+
+import FactoryDescription from "../../components/patterns/factory/FactoryDescription.astro";
+import FactoryDiagram from "../../components/patterns/factory/FactoryDiagram.astro";
+import FactoryDemo from "../../components/patterns/factory/FactoryDemo.astro";
+
+import { meta } from "./meta";
+---
+
+<BaseLayout title={meta.pageTitle}>
+  <DemoShell title={meta.title}>
+    <FactoryDescription />
+
+    <FactoryDiagram />
+
+    <DemoGrid>
+      <FactoryDemo />
+      <CodeSection
+        idPrefix="factory"
+        title="Ejemplo del patrón (Factory Method)"
+        subtitle="Creator define <b>factoryMethod()</b> y decide qué <b>Product</b> instanciar."
+        note='La idea: el <code>Client</code> llama <code>someOperation()</code> y el <code>Creator</code> crea el <code>Product</code> (A o B) sin condicionar al cliente.'
+        fileTs="factory-method.ts"
+        fileJs="factory-method.js"
+      />
+    </DemoGrid>
+
+    <script src="/vendor/prism-lite.js" is:inline></script>
+
+
+    <script type="application/json" id="factoryCodeTs">
+      {
+        "code": "// factory-method.ts\n\n// Product\ninterface Product {\n  operation(): string;\n}\n\nclass ConcreteProductA implements Product {\n  operation() {\n    return \"ConcreteProductA\";\n  }\n}\n\nclass ConcreteProductB implements Product {\n  operation() {\n    return \"ConcreteProductB\";\n  }\n}\n\n// Creator\nabstract class Creator {\n  // Factory Method\n  protected abstract factoryMethod(): Product;\n\n  // Lógica que usa el producto\n  public someOperation(): string {\n    const product = this.factoryMethod();\n    return `Creator usa ${product.operation()}`;\n  }\n}\n\nclass ConcreteCreatorA extends Creator {\n  protected factoryMethod(): Product {\n    return new ConcreteProductA();\n  }\n}\n\nclass ConcreteCreatorB extends Creator {\n  protected factoryMethod(): Product {\n    return new ConcreteProductB();\n  }\n}\n\n// Client\nfunction clientCode(creator: Creator) {\n  console.log(creator.someOperation());\n}\n\nclientCode(new ConcreteCreatorA());\nclientCode(new ConcreteCreatorB());\n"
+      }
+    </script>
+    <script type="application/json" id="factoryCodeJs">
+      {
+        "code": "// factory-method.js\n\nclass ProductA {\n  operation() {\n    return \"ProductA\";\n  }\n}\n\nclass ProductB {\n  operation() {\n    return \"ProductB\";\n  }\n}\n\nclass CreatorA {\n  factoryMethod() {\n    return new ProductA();\n  }\n\n  someOperation() {\n    const product = this.factoryMethod();\n    return `Creator usa ${product.operation()}`;\n  }\n}\n\nclass CreatorB {\n  factoryMethod() {\n    return new ProductB();\n  }\n\n  someOperation() {\n    const product = this.factoryMethod();\n    return `Creator usa ${product.operation()}`;\n  }\n}\n\nfunction clientCode(creator) {\n  console.log(creator.someOperation());\n}\n\nclientCode(new CreatorA());\nclientCode(new CreatorB());\n"
+      }
+    </script>
+    
+    <script>
+    import "../../scripts/patterns/factory-logic.js";
+    </script> 
+  </DemoShell>
+</BaseLayout>

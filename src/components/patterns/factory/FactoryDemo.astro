@@ -1,0 +1,84 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">Demo (Factory Method)</h2>
+    <span class="badge">createProduct()</span>
+  </div>
+
+  <p class="hint" style="margin-top: 0;">
+    Cambia el <b>Creator</b> (A o B). Luego ejecuta <code>someOperation()</code> y mira qué <b>Product</b> creó.
+  </p>
+
+  <div class="row" style="margin-top: 10px;">
+    <button class="primary" id="btnRunFactory">Creator.someOperation()</button>
+    <button id="btnToggleCreator">Creator: A</button>
+  </div>
+
+  <div class="valueLine" style="margin-top: 10px;">
+    <strong>Producto creado</strong>
+    <span id="factoryResult" class="valuePill">—</span>
+  </div>
+
+  <div id="factoryLog" class="log"></div>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(255, 198, 93, .12);
+    border: 1px solid rgba(255, 198, 93, .25);
+    color: rgba(255, 208, 120, 0.95);
+  }
+
+  .hint { color: var(--muted); font-size: 13px; }
+
+  .valueLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 12px;
+  }
+
+  .valueLine strong {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .valuePill {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 198, 93, .10);
+    border: 1px solid rgba(255, 198, 93, .25);
+    color: rgba(255, 208, 120, 0.95);
+    font-weight: 800;
+    font-size: 13px;
+  }
+
+  .log {
+    margin-top: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    padding: 10px;
+    color: rgba(230,238,252,.88);
+    max-height: 220px;
+    overflow: auto;
+  }
+
+  .log :global(.muted) { color: rgba(159,178,214,.85); }
+
+  :global(.flash) { animation: flash .6s ease; }
+  @keyframes flash {
+    0% { box-shadow: 0 0 0 rgba(255, 198, 93, 0); }
+    30% { box-shadow: 0 0 0 6px rgba(255, 198, 93, .18); }
+    100% { box-shadow: 0 0 0 rgba(255, 198, 93, 0); }
+  }
+</style>

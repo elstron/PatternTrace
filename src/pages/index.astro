@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DemoShell from "../components/demo/DemoShell.astro";
+
+import { meta as observer } from "../patterns/observer/meta";
+import { meta as adapter } from "../patterns/adapter/meta";
+import { meta as factory } from "../patterns/factory/meta";
+import { meta as bridge } from "../patterns/bridge/meta";
+
+const patterns = [
+	{ ...observer, href: "/patterns/observer" },
+	{ ...adapter, href: "/patterns/adapter" },
+	{ ...factory, href: "/patterns/factory" },
+	{ ...bridge, href: "/patterns/bridge" },
+];
+---
+
+<BaseLayout title="Patrones de diseño">
+	<DemoShell
+		title="Patrones de diseño"
+		description={`Un mini-lab de patrones con demos visuales. Selecciona un patrón para ver su demo.`}
+	>
+		<div class="gridCards">
+			{patterns.map((p) => (
+				<a class="cardLink panel" href={p.href}>
+					<div class="row" style="justify-content: space-between; align-items:center;">
+						<b>{p.title}</b>
+						<span class="pill">ver</span>
+					</div>
+					<p style="margin-top: 8px;">Ruta: <code>{p.href}</code></p>
+				</a>
+			))}
+		</div>
+	</DemoShell>
+</BaseLayout>
+
+<style>
+	.gridCards {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 14px;
+	}
+	@media (max-width: 860px) {
+		.gridCards { grid-template-columns: 1fr; }
+	}
+
+	.cardLink {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+
+	.pill {
+		font-size: 12px;
+		padding: 4px 8px;
+		border-radius: 999px;
+		border: 1px solid rgba(255,255,255,.12);
+		color: var(--muted);
+		background: rgba(0,0,0,.12);
+	}
+</style>

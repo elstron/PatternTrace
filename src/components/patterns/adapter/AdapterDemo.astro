@@ -1,0 +1,85 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">Demo (Adapter)</h2>
+    <span class="badge">request()</span>
+  </div>
+
+  <p class="hint" style="margin-top: 0;">
+    El cliente espera <code>target.request()</code>. El adaptee expone <code>specificRequest()</code>.
+    El adapter traduce entre ambos.
+  </p>
+
+  <div class="row" style="margin-top: 10px;">
+    <button class="primary" id="btnRunClient">Client → Target.request()</button>
+    <button id="btnToggleAdapter">Usar Adapter: ON</button>
+  </div>
+
+  <div class="valueLine" style="margin-top: 10px;">
+    <strong>Resultado</strong>
+    <span id="adapterResult" class="valuePill">—</span>
+  </div>
+
+  <div id="adapterLog" class="log"></div>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(93, 214, 255, .12);
+    border: 1px solid rgba(93, 214, 255, .25);
+    color: var(--accent);
+  }
+
+  .hint { color: var(--muted); font-size: 13px; }
+
+  .valueLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 12px;
+  }
+
+  .valueLine strong {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .valuePill {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(92,255,138,.10);
+    border: 1px solid rgba(92,255,138,.25);
+    color: var(--ok);
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .log {
+    margin-top: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    padding: 10px;
+    color: rgba(230,238,252,.88);
+    max-height: 220px;
+    overflow: auto;
+  }
+
+  .log :global(.muted) { color: rgba(159,178,214,.85); }
+
+  :global(.flash) { animation: flash .6s ease; }
+  @keyframes flash {
+    0% { box-shadow: 0 0 0 rgba(93,214,255,0); }
+    30% { box-shadow: 0 0 0 6px rgba(93,214,255,.18); }
+    100% { box-shadow: 0 0 0 rgba(93,214,255,0); }
+  }
+</style>

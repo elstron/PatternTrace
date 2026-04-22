@@ -1,0 +1,157 @@
+---
+type Props = {
+  title: string;
+  lang?: string;
+};
+
+const { title, lang = "es" } = Astro.props;
+---
+
+<style is:global>
+  @import "../styles/global.css";
+</style>
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/vendor/prism-lite.css" />
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="appShell">
+      <aside class="sidebar" aria-label="Navegación">
+        <a class="brand" href="/">Pattern Lab</a>
+
+        <nav class="nav">
+          <a class="navLink" href="/">Inicio</a>
+          <a class="navLink" href="/patterns">Patrones</a>
+        </nav>
+
+        <div class="navGroup">
+          <div class="navTitle">Creacionales</div>
+          <a class="navLink" href="/patterns/factory">Factory Method</a>
+        </div>
+
+        <div class="navGroup">
+          <div class="navTitle">Estructurales</div>
+          <a class="navLink" href="/patterns/adapter">Adapter</a>
+          <a class="navLink" href="/patterns/bridge">Bridge</a>
+        </div>
+
+        <div class="navGroup">
+          <div class="navTitle">Comportamiento</div>
+          <a class="navLink" href="/patterns/observer">Observer</a>
+        </div>
+
+        <div class="sidebarFoot">
+          <span class="muted">Astro + Canvas</span>
+        </div>
+      </aside>
+
+      <main class="mainContent">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  .appShell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    padding: 18px 14px;
+    border-right: 1px solid rgba(255,255,255,.08);
+    background: color-mix(in oklab, var(--panel) 88%, black);
+    overflow: auto;
+  }
+
+  .brand {
+    display: block;
+    padding: 10px 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 900;
+    letter-spacing: .2px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  .nav {
+    margin-top: 14px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .navGroup {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: grid;
+    gap: 8px;
+  }
+
+  .navTitle {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 0 10px;
+  }
+
+  .navLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: rgba(230,238,252,.92);
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(0,0,0,.10);
+  }
+
+  .navLink:hover {
+    border-color: rgba(93,214,255,.30);
+    background: rgba(93,214,255,.08);
+  }
+
+  .sidebarFoot {
+    margin-top: 18px;
+    padding: 10px 10px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  .mainContent {
+    min-width: 0;
+  }
+
+  /* Mobile: sidebar arriba, contenido abajo */
+  @media (max-width: 920px) {
+    .appShell {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      position: relative;
+      height: auto;
+      border-right: 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+  }
+
+  .muted { color: var(--muted); }
+</style>

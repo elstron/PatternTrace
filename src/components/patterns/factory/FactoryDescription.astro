@@ -1,0 +1,23 @@
+<section class="panel">
+  <div class="title" style="margin-bottom: 6px;">
+    <h2 style="margin:0; font-size:16px;">¿Qué es Factory Method?</h2>
+    <span class="badge">creación</span>
+  </div>
+
+  <p style="margin: 0; color: var(--muted);">
+    <b>Factory Method</b> define un método (la “fábrica”) para crear objetos, pero deja a las subclases decidir
+    <i>qué</i> clase concreta instanciar. El cliente trabaja contra la interfaz <code>Product</code>, sin conocer
+    <code>ConcreteProduct</code>.
+  </p>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(255, 198, 93, .12);
+    border: 1px solid rgba(255, 198, 93, .25);
+    color: rgba(255, 208, 120, 0.95);
+  }
+</style>

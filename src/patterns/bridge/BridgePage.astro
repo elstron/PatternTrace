@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DemoShell from "../../components/demo/DemoShell.astro";
+import DemoGrid from "../../components/demo/DemoGrid.astro";
+import CodeSection from "../../components/CodeSection.astro";
+
+import BridgeDescription from "../../components/patterns/bridge/BridgeDescription.astro";
+import BridgeDiagram from "../../components/patterns/bridge/BridgeDiagram.astro";
+import BridgeDemo from "../../components/patterns/bridge/BridgeDemo.astro";
+
+import { meta } from "./meta";
+---
+
+<BaseLayout title={meta.pageTitle}>
+  <DemoShell title={meta.title}>
+    <BridgeDescription />
+
+    <BridgeDiagram />
+
+    <DemoGrid>
+      <BridgeDemo />
+      <CodeSection
+        idPrefix="bridge"
+        title="Ejemplo del patrón (Bridge)"
+        subtitle="Abstraction delega en Implementor para desacoplar dos jerarquías."
+        note='La clave: <code>Remote</code> no hereda de <code>TV</code>/<code>Radio</code>. En su lugar, <code>Remote</code> <b>compone</b> un <code>Device</code>.'
+        fileTs="bridge.ts"
+        fileJs="bridge.js"
+      />
+    </DemoGrid>
+
+    <script src="/vendor/prism-lite.js" is:inline></script>
+    <script>
+      import "../../scripts/patterns/bridge-logic.js";
+    </script>
+
+    <script type="application/json" id="bridgeCodeTs">
+      {
+        "code": "// bridge.ts\n\n// Implementor\ninterface Device {\n  enable(): void;\n  disable(): void;\n  setVolume(v: number): void;\n  getName(): string;\n}\n\nclass Tv implements Device {\n  private on = false;\n  private volume = 10;\n\n  enable() { this.on = true; }\n  disable() { this.on = false; }\n  setVolume(v: number) { this.volume = Math.max(0, Math.min(100, v)); }\n  getName() { return \"TV\"; }\n}\n\nclass Radio implements Device {\n  private on = false;\n  private volume = 10;\n\n  enable() { this.on = true; }\n  disable() { this.on = false; }\n  setVolume(v: number) { this.volume = Math.max(0, Math.min(100, v)); }\n  getName() { return \"Radio\"; }\n}\n\n// Abstraction\nclass Remote {\n  constructor(protected device: Device) {}\n\n  operate(): string {\n    this.device.enable();\n    this.device.setVolume(20);\n    return `Remote → ${this.device.getName()} (vol=20)`;\n  }\n}\n\nclass AdvancedRemote extends Remote {\n  operate(): string {\n    this.device.enable();\n    this.device.setVolume(50);\n    return `AdvancedRemote → ${this.device.getName()} (vol=50)`;\n  }\n}\n\n// Client\nconst r1 = new Remote(new Tv());\nconsole.log(r1.operate());\n\nconst r2 = new AdvancedRemote(new Radio());\nconsole.log(r2.operate());\n"
+      }
+    </script>
+    <script type="application/json" id="bridgeCodeJs">
+      {
+        "code": "// bridge.js\n\nclass Tv {\n  constructor() { this.on = false; this.volume = 10; }\n  enable() { this.on = true; }\n  disable() { this.on = false; }\n  setVolume(v) { this.volume = Math.max(0, Math.min(100, v)); }\n  getName() { return \"TV\"; }\n}\n\nclass Radio {\n  constructor() { this.on = false; this.volume = 10; }\n  enable() { this.on = true; }\n  disable() { this.on = false; }\n  setVolume(v) { this.volume = Math.max(0, Math.min(100, v)); }\n  getName() { return \"Radio\"; }\n}\n\nclass Remote {\n  constructor(device) { this.device = device; }\n  operate() {\n    this.device.enable();\n    this.device.setVolume(20);\n    return `Remote → ${this.device.getName()} (vol=20)`;\n  }\n}\n\nclass AdvancedRemote extends Remote {\n  operate() {\n    this.device.enable();\n    this.device.setVolume(50);\n    return `AdvancedRemote → ${this.device.getName()} (vol=50)`;\n  }\n}\n\nconst r1 = new Remote(new Tv());\nconsole.log(r1.operate());\n\nconst r2 = new AdvancedRemote(new Radio());\nconsole.log(r2.operate());\n"
+      }
+    </script>
+  </DemoShell>
+</BaseLayout>

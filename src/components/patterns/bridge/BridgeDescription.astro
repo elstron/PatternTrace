@@ -1,0 +1,23 @@
+<section class="panel">
+  <div class="title" style="margin-bottom: 6px;">
+    <h2 style="margin:0; font-size:16px;">¿Qué es Bridge?</h2>
+    <span class="badge">estructura</span>
+  </div>
+
+  <p style="margin: 0; color: var(--muted);">
+    <b>Bridge</b> separa una abstracción (lo que el cliente usa) de su implementación (cómo se hace),
+    para que ambas puedan variar independientemente. En vez de herencia profunda, usamos composición:
+    <code>Abstraction</code> <b>tiene</b> un <code>Implementor</code>.
+  </p>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(186, 104, 255, .12);
+    border: 1px solid rgba(186, 104, 255, .25);
+    color: rgba(214, 173, 255, 0.95);
+  }
+</style>

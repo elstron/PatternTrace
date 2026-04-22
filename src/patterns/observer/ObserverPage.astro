@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DemoShell from "../../components/demo/DemoShell.astro";
+import DemoGrid from "../../components/demo/DemoGrid.astro";
+
+import DiagramSection from "./components/DiagramSection.astro";
+import SubjectSection from "./components/SubjectSection.astro";
+import ObserversSection from "./components/ObserversSection.astro";
+import CodeSection from "../../components/CodeSection.astro";
+import ObserverDescription from "../../components/patterns/observer/ObserverDescription.astro";
+
+import { meta } from "./meta";
+---
+
+<BaseLayout title={meta.pageTitle}>
+  <DemoShell title={meta.title}>
+    <ObserverDescription />
+
+    <DiagramSection />
+
+    <DemoGrid>
+      <SubjectSection />
+      <ObserversSection />
+    </DemoGrid>
+
+  <CodeSection />
+
+    <script src="/vendor/prism-lite.js" is:inline></script>
+  <script>
+    import "../../scripts/observer-logic.js";
+  </script>
+  </DemoShell>
+</BaseLayout>

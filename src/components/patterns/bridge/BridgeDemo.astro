@@ -1,0 +1,86 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">Demo (Bridge)</h2>
+    <span class="badge">operate()</span>
+  </div>
+
+  <p class="hint" style="margin-top: 0;">
+    Cambia la <b>Abstraction</b> (Remote / AdvancedRemote) y el <b>Implementor</b> (TV / Radio).
+    Luego ejecuta una operación: la abstracción delega en la implementación.
+  </p>
+
+  <div class="row" style="margin-top: 10px;">
+    <button class="primary" id="btnBridgeOperate">Remote.operate()</button>
+    <button id="btnBridgeToggleAbs">Abstraction: Remote</button>
+    <button id="btnBridgeToggleImpl">Implementor: TV</button>
+  </div>
+
+  <div class="valueLine" style="margin-top: 10px;">
+    <strong>Salida</strong>
+    <span id="bridgeResult" class="valuePill">—</span>
+  </div>
+
+  <div id="bridgeLog" class="log"></div>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(186, 104, 255, .12);
+    border: 1px solid rgba(186, 104, 255, .25);
+    color: rgba(214, 173, 255, 0.95);
+  }
+
+  .hint { color: var(--muted); font-size: 13px; }
+
+  .valueLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 12px;
+  }
+
+  .valueLine strong {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .valuePill {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(186, 104, 255, .10);
+    border: 1px solid rgba(186, 104, 255, .25);
+    color: rgba(214, 173, 255, 0.95);
+    font-weight: 800;
+    font-size: 13px;
+  }
+
+  .log {
+    margin-top: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    padding: 10px;
+    color: rgba(230,238,252,.88);
+    max-height: 220px;
+    overflow: auto;
+  }
+
+  .log :global(.muted) { color: rgba(159,178,214,.85); }
+
+  :global(.flash) { animation: flash .6s ease; }
+  @keyframes flash {
+    0% { box-shadow: 0 0 0 rgba(186,104,255,0); }
+    30% { box-shadow: 0 0 0 6px rgba(186,104,255,.18); }
+    100% { box-shadow: 0 0 0 rgba(186,104,255,0); }
+  }
+</style>

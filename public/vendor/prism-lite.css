@@ -1,0 +1,69 @@
+/* Prism-like minimal theme for this demo (works with prism-lite.js token classes) */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: rgba(230,238,252,.92);
+  background: transparent;
+  text-shadow: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.35;
+  tab-size: 2;
+  hyphens: none;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: rgba(159,178,214,.85);
+  font-style: italic;
+}
+
+.token.punctuation { color: rgba(230,238,252,.65); }
+.token.operator { color: rgba(230,238,252,.90); }
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ffb3d9;
+}
+
+.token.boolean,
+.token.number {
+  color: #ffd37a;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #5cff8a;
+}
+
+.token.keyword,
+.token.atrule {
+  color: #8bdbff;
+}
+
+.token.function,
+.token.class-name {
+  color: #c7a8ff;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #ffb86c;
+}
+
+.token.important,
+.token.bold { font-weight: 700; }
+.token.italic { font-style: italic; }
