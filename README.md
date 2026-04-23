@@ -1,4 +1,4 @@
-# Pattern Trace
+# Desing Patterns | Pattern Trace 
 
 Interactive **Astro** website to learn design patterns through **demos + animated diagrams + code**.
 
