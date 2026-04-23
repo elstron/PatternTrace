@@ -1,4 +1,4 @@
-# Pattern Trace
+# Patrones de Diseño | Pattern Trace
 
 Sitio web interactivo hecho con **Astro** para aprender patrones de diseño mediante **demos + diagramas animados + código**.
 
