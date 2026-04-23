@@ -2,9 +2,9 @@
 import RootBaseLayout from "../../../layouts/BaseLayout.astro";
 
 // Passthrough wrapper para mantener imports bajo `src/patterns/_shared/...`.
-const { title, lang } = Astro.props;
+const { title, lang, ...rest } = Astro.props;
 ---
 
-<RootBaseLayout title={title} lang={lang}>
+<RootBaseLayout title={title} lang={lang} {...rest}>
 	<slot />
 </RootBaseLayout>

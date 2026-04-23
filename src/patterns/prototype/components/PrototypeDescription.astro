@@ -1,0 +1,36 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">¿Qué es Prototype?</h2>
+    <span class="badge">creacional</span>
+  </div>
+
+  <p>
+    <b>Prototype</b> crea nuevos objetos clonando un prototipo existente.
+    En vez de construir desde cero, copias una “plantilla” y ajustas lo necesario.
+  </p>
+
+  <ul class="list">
+    <li>Reduce el costo de instanciación cuando crear es caro.</li>
+    <li>Permite duplicar objetos ya configurados.</li>
+    <li>Ojo con copias profundas vs. superficiales.</li>
+  </ul>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(214, 173, 255, .10);
+    border: 1px solid rgba(214, 173, 255, .20);
+    color: rgba(214, 173, 255, .95);
+  }
+
+  .list {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+  }
+
+  .list li { margin: 6px 0; }
+</style>

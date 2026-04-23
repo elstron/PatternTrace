@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../_shared/layouts/BaseLayout.astro';
+import DemoGrid from '../../components/demo/DemoGrid.astro';
+
+import PrototypeDescription from './components/PrototypeDescription.astro';
+import PrototypeDiagram from './components/PrototypeDiagram.astro';
+import PrototypeDemo from './components/PrototypeDemo.astro';
+
+import CodeExamplePanel from '../_shared/components/CodeExamplePanel.astro';
+import { prototypeExample } from './code-examples.js';
+---
+
+<BaseLayout title="Prototype Pattern" description="Creational pattern: clone configured objects.">
+  <DemoGrid>
+    <PrototypeDescription />
+    <PrototypeDiagram />
+    <PrototypeDemo />
+
+    <CodeExamplePanel
+      title={prototypeExample.title}
+      subtitle={prototypeExample.subtitle}
+      note={prototypeExample.note}
+      ts={prototypeExample.ts}
+      js={prototypeExample.js}
+    />
+  </DemoGrid>
+
+  <script>
+    import './prototype-logic.js';
+  </script>
+</BaseLayout>

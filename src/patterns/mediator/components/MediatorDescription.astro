@@ -1,0 +1,36 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">¿Qué es Mediator?</h2>
+    <span class="badge">comportamiento</span>
+  </div>
+
+  <p>
+    <b>Mediator</b> define un objeto que encapsula cómo un conjunto de objetos interactúan.
+    Evita dependencias directas entre componentes, reduciendo el acoplamiento.
+  </p>
+
+  <ul class="list">
+    <li><b>Colleagues</b>: componentes que emiten eventos.</li>
+    <li><b>Mediator</b>: recibe eventos y decide qué acciones ejecutar.</li>
+    <li>Mejor para reglas de coordinación que crecen con el tiempo.</li>
+  </ul>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(93, 214, 255, .10);
+    border: 1px solid rgba(93, 214, 255, .20);
+    color: rgba(93, 214, 255, .95);
+  }
+
+  .list {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+  }
+
+  .list li { margin: 6px 0; }
+</style>

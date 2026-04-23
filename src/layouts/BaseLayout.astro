@@ -33,6 +33,8 @@ const { title, lang = 'es' } = Astro.props;
         <div class="navGroup">
           <div class="navTitle">Creacionales</div>
           <a class="navLink" href="/patterns/factory">Factory Method</a>
+          <a class="navLink" href="/patterns/builder">Builder</a>
+          <a class="navLink" href="/patterns/prototype">Prototype</a>
         </div>
 
         <div class="navGroup">
@@ -44,6 +46,7 @@ const { title, lang = 'es' } = Astro.props;
         <div class="navGroup">
           <div class="navTitle">Comportamiento</div>
           <a class="navLink" href="/patterns/observer">Observer</a>
+          <a class="navLink" href="/patterns/mediator">Mediator</a>
         </div>
 
         <div class="sidebarFoot">
@@ -138,6 +141,12 @@ const { title, lang = 'es' } = Astro.props;
 
   .mainContent {
     min-width: 0;
+  }
+
+  .grid {
+    max-width: 1440px;
+    padding: 25px;
+    margin: 0 auto;
   }
 
   /* Mobile: sidebar arriba, contenido abajo */

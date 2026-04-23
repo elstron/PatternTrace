@@ -29,66 +29,8 @@
   let useAdapter = true;
   let animToken = 0;
 
-  // ====== Code panel (Adapter) ======
-  (function initAdapterCodePanel() {
-    const codeBlockEl = $("#adapter-codeBlock");
-    const codeCaptionEl = $("#adapter-codeCaption");
-    const tabTsEl = $("#adapter-tabTs");
-    const tabJsEl = $("#adapter-tabJs");
-    const btnCopyCodeEl = $("#adapter-btnCopyCode");
-
-    if (!codeBlockEl || !tabTsEl || !tabJsEl) return;
-
-    const tsJsonEl = $("#adapterCodeTs");
-    const jsJsonEl = $("#adapterCodeJs");
-    const tsCode = tsJsonEl ? JSON.parse(tsJsonEl.textContent || "{}")?.code || "" : "";
-    const jsCode = jsJsonEl ? JSON.parse(jsJsonEl.textContent || "{}")?.code || "" : "";
-
-    let activeLang = "ts";
-
-    function renderCode() {
-      const isTS = activeLang === "ts";
-      tabTsEl.classList.toggle("active", isTS);
-      tabJsEl.classList.toggle("active", !isTS);
-      if (codeCaptionEl) codeCaptionEl.textContent = isTS ? "adapter.ts" : "adapter.js";
-
-      const raw = isTS ? tsCode : jsCode;
-      const langClass = isTS ? "language-typescript" : "language-javascript";
-      codeBlockEl.classList.remove("language-typescript", "language-javascript");
-      codeBlockEl.classList.add(langClass);
-      const pre = codeBlockEl.closest("pre");
-      pre?.classList.remove("language-typescript", "language-javascript");
-      pre?.classList.add(langClass);
-
-      codeBlockEl.textContent = raw;
-      if (window.Prism && typeof window.Prism.highlightElement === "function") {
-        window.Prism.highlightElement(codeBlockEl);
-      }
-    }
-
-    tabTsEl.addEventListener("click", () => { activeLang = "ts"; renderCode(); });
-    tabJsEl.addEventListener("click", () => { activeLang = "js"; renderCode(); });
-
-    btnCopyCodeEl?.addEventListener("click", async () => {
-      const text = activeLang === "ts" ? tsCode : jsCode;
-      try {
-        await navigator.clipboard.writeText(text);
-        btnCopyCodeEl.textContent = "Copiado";
-        setTimeout(() => (btnCopyCodeEl.textContent = "Copiar código"), 900);
-      } catch {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        btnCopyCodeEl.textContent = "Copiado";
-        setTimeout(() => (btnCopyCodeEl.textContent = "Copiar código"), 900);
-      }
-    });
-
-    renderCode();
-  })();
+  // Code examples are now rendered via `astro:components` <Code />, so the old
+  // Prism/JSON-driven code panel is removed.
 
   function log(line) {
     if (!logEl) return;

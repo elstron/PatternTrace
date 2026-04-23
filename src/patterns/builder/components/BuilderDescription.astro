@@ -1,0 +1,36 @@
+<section class="panel">
+  <div class="title">
+    <h2 style="margin:0; font-size:16px;">¿Qué es Builder?</h2>
+    <span class="badge">creacional</span>
+  </div>
+
+  <p>
+    <b>Builder</b> separa la construcción de un objeto complejo de su representación.
+    Así, el mismo proceso de construcción puede producir diferentes variantes.
+  </p>
+
+  <ul class="list">
+    <li><b>Director</b>: orquesta los pasos (opcional).</li>
+    <li><b>Builder</b>: define pasos para construir partes.</li>
+    <li><b>ConcreteBuilder</b>: implementa los pasos y devuelve el resultado.</li>
+  </ul>
+</section>
+
+<style>
+  .badge {
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(93, 255, 160, .10);
+    border: 1px solid rgba(93, 255, 160, .20);
+    color: rgba(112, 255, 178, .95);
+  }
+
+  .list {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+  }
+
+  .list li { margin: 6px 0; }
+</style>

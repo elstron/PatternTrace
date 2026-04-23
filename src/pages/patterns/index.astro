@@ -6,11 +6,18 @@ import { meta as observer } from "../../patterns/observer/meta";
 import { meta as adapter } from "../../patterns/adapter/meta";
 import { meta as factory } from "../../patterns/factory/meta";
 import { meta as bridge } from "../../patterns/bridge/meta";
+import { meta as builder } from "../../patterns/builder/meta";
+import { meta as prototype } from "../../patterns/prototype/meta";
+import { meta as mediator } from "../../patterns/mediator/meta";
 
 const groups = [
   {
     title: "Creacionales",
-    patterns: [{ ...factory, href: "/patterns/factory" }],
+    patterns: [
+      { ...factory, href: "/patterns/factory" },
+      { ...builder, href: "/patterns/builder" },
+      { ...prototype, href: "/patterns/prototype" },
+    ],
   },
   {
     title: "Estructurales",
@@ -21,7 +28,10 @@ const groups = [
   },
   {
     title: "Comportamiento",
-    patterns: [{ ...observer, href: "/patterns/observer" }],
+    patterns: [
+      { ...observer, href: "/patterns/observer" },
+      { ...mediator, href: "/patterns/mediator" },
+    ],
   },
 ];
 ---

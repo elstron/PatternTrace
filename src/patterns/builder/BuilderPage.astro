@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../_shared/layouts/BaseLayout.astro';
+import DemoGrid from '../../components/demo/DemoGrid.astro';
+
+import BuilderDescription from './components/BuilderDescription.astro';
+import BuilderDiagram from './components/BuilderDiagram.astro';
+import BuilderDemo from './components/BuilderDemo.astro';
+
+import CodeExamplePanel from '../_shared/components/CodeExamplePanel.astro';
+import { builderExample } from './code-examples.js';
+---
+
+<BaseLayout title="Builder Pattern" description="Creational pattern: build complex objects step-by-step.">
+  <DemoGrid>
+    <BuilderDescription />
+    <BuilderDiagram />
+    <BuilderDemo />
+
+    <CodeExamplePanel
+      title={builderExample.title}
+      subtitle={builderExample.subtitle}
+      note={builderExample.note}
+      ts={builderExample.ts}
+      js={builderExample.js}
+    />
+  </DemoGrid>
+
+  <script>
+    import './builder-logic.js';
+  </script>
+</BaseLayout>

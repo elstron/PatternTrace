@@ -2,14 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DemoShell from '../../components/demo/DemoShell.astro';
 import DemoGrid from '../../components/demo/DemoGrid.astro';
+import CodeExamplePanel from '../_shared/components/CodeExamplePanel.astro';
 
 import DiagramSection from './components/DiagramSection.astro';
 import SubjectSection from './components/SubjectSection.astro';
 import ObserversSection from './components/ObserversSection.astro';
-import CodeSection from '../../components/CodeSection.astro';
 import ObserverDescription from './components/ObserverDescription.astro';
 
 import { meta } from './meta';
+import { observerExample } from './code-examples.js';
 ---
 
 <BaseLayout title={meta.pageTitle}>
@@ -23,9 +24,13 @@ import { meta } from './meta';
       <ObserversSection />
     </DemoGrid>
 
-    <CodeSection />
-
-    <script src="/vendor/prism-lite.js" is:inline></script>
+    <CodeExamplePanel
+      title={observerExample.title}
+      subtitle={observerExample.subtitle}
+      note={observerExample.note}
+      ts={observerExample.ts}
+      js={observerExample.js}
+    />
     <script>
       import './observer-logic.js';
     </script>

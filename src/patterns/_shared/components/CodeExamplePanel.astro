@@ -1,0 +1,82 @@
+---
+import { Code } from 'astro:components';
+
+type Props = {
+  title: string;
+  subtitle?: string;
+  note?: string;
+  ts: { filename?: string; code: string };
+  js: { filename?: string; code: string };
+};
+
+const { title, subtitle, note, ts, js } = Astro.props;
+---
+
+<section class="panel codePanel" data-code-panel>
+  <div class="title" style="margin-bottom: 6px;">
+    <h2 style="margin:0; font-size:16px;">{title}</h2>
+    <span class="badge">código</span>
+  </div>
+
+  {subtitle ? <p style="margin: 0 0 10px; color: var(--muted);">{subtitle}</p> : null}
+
+  <div class="tabs" role="tablist" aria-label="Código">
+    <button class="tabBtn active" type="button" data-code="ts">TypeScript</button>
+    <button class="tabBtn" type="button" data-code="js">JavaScript</button>
+  </div>
+
+  <div class="codeBlock is-active" data-code-panel="ts">
+    <Code code={ts.code} lang="ts" />
+  </div>
+
+  <div class="codeBlock" data-code-panel="js">
+    <Code code={js.code} lang="js" />
+  </div>
+
+  {note ? <div class="smallNote">{note}</div> : null}
+
+  <script is:inline>
+    (function initAllCodeTabs(){
+      const root = document.currentScript?.closest('[data-code-panel]');
+      if (!root) return;
+      const btns = Array.from(root.querySelectorAll('.tabBtn'));
+      const panels = Array.from(root.querySelectorAll('[data-code-panel]'));
+      if (!btns.length || !panels.length) return;
+      function setActive(kind){
+        btns.forEach(b => b.classList.toggle('active', b.dataset.code === kind));
+        panels.forEach(p => p.classList.toggle('is-active', p.dataset.codePanel === kind));
+      }
+      btns.forEach(b => b.addEventListener('click', (e) => {
+        e.preventDefault();
+        setActive(b.dataset.code || 'ts');
+      }));
+      setActive('ts');
+    })();
+  </script>
+</section>
+
+<style>
+  .codePanel { margin-top: 0; }
+  .tabs { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 6px 0 10px; }
+  .tabBtn { padding: 8px 10px; border-radius: 10px; }
+  .tabBtn.active { background: rgba(93,214,255,.22); border-color: rgba(93,214,255,.35); }
+
+  .codeBlock { display: none; }
+  .codeBlock.is-active { display: block; }
+
+  /* Match current panel aesthetics */
+  .codePanel :global(pre) {
+    margin: 0;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(0,0,0,.28);
+    overflow: auto;
+    max-height: 420px;
+    color: rgba(230,238,252,.92);
+    line-height: 1.35;
+    font-size: 12.5px;
+  }
+
+  .smallNote { color: var(--muted); font-size: 13px; margin-top: 8px; }
+</style>

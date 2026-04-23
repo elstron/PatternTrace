@@ -1,0 +1,9 @@
+---
+import MediatorPage from '../../patterns/mediator/MediatorPage.astro';
+
+// Workaround: Cloudflare workerd prerender crashes for this route in the current setup.
+// Keeping it dynamic avoids build-time rendering while still serving at runtime.
+export const prerender = false;
+---
+
+<MediatorPage />

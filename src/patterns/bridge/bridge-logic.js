@@ -308,63 +308,7 @@
     });
   }
 
-  // ====== Code panel ======
-  function initCodePanel() {
-    const tabTs = $("#bridge-tabTs");
-    const tabJs = $("#bridge-tabJs");
-    const caption = $("#bridge-codeCaption");
-    const block = $("#bridge-codeBlock");
-    const btnCopy = $("#bridge-btnCopyCode");
-
-    const tsJson = $("#bridgeCodeTs");
-    const jsJson = $("#bridgeCodeJs");
-    if (!tabTs || !tabJs || !caption || !block || !btnCopy || !tsJson || !jsJson) return;
-
-    let active = "ts";
-
-    function parse(el) {
-      try {
-        const obj = JSON.parse(el.textContent || "{}");
-        return String(obj.code || "");
-      } catch {
-        return "";
-      }
-    }
-
-    const codeTs = parse(tsJson);
-    const codeJs = parse(jsJson);
-
-    function render() {
-      const isTs = active === "ts";
-      caption.textContent = isTs ? "bridge.ts" : "bridge.js";
-      block.className = isTs ? "language-typescript" : "language-javascript";
-      block.textContent = isTs ? codeTs : codeJs;
-
-      tabTs.classList.toggle("active", isTs);
-      tabJs.classList.toggle("active", !isTs);
-
-      if (window.Prism && window.Prism.highlightElement) {
-        window.Prism.highlightElement(block);
-      }
-    }
-
-    tabTs.addEventListener("click", () => { active = "ts"; render(); });
-    tabJs.addEventListener("click", () => { active = "js"; render(); });
-
-    btnCopy.addEventListener("click", async () => {
-      const code = active === "ts" ? codeTs : codeJs;
-      try {
-        await navigator.clipboard.writeText(code);
-        btnCopy.textContent = "Copiado";
-        setTimeout(() => (btnCopy.textContent = "Copiar código"), 900);
-      } catch {
-        btnCopy.textContent = "No se pudo";
-        setTimeout(() => (btnCopy.textContent = "Copiar código"), 900);
-      }
-    });
-
-    render();
-  }
+  // Code examples are now rendered via `astro:components` <Code />.
 
   function run() {
     const { remote } = build();
@@ -401,5 +345,5 @@
   setUiState();
   resizeCanvas();
   drawBase();
-  initCodePanel();
+  // code panel handled in the Astro page
 })();

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../_shared/layouts/BaseLayout.astro';
+import DemoGrid from '../../components/demo/DemoGrid.astro';
+
+import MediatorDescription from './components/MediatorDescription.astro';
+import MediatorDiagram from './components/MediatorDiagram.astro';
+import MediatorDemo from './components/MediatorDemo.astro';
+
+import CodeExamplePanel from '../_shared/components/CodeExamplePanel.astro';
+import { mediatorExample } from './code-examples.js';
+
+import { meta } from './meta';
+---
+
+<BaseLayout title={meta.pageTitle} description={meta.description}>
+  <DemoGrid>
+    <MediatorDescription />
+    <MediatorDiagram />
+    <MediatorDemo />
+
+    <CodeExamplePanel
+      title={mediatorExample.title}
+      subtitle={mediatorExample.subtitle}
+      note={mediatorExample.note}
+      ts={mediatorExample.ts}
+      js={mediatorExample.js}
+    />
+  </DemoGrid>
+
+  <script>
+    import './mediator-logic.js';
+  </script>
+</BaseLayout>
