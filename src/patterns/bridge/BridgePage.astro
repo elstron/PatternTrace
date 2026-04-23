@@ -1,14 +1,14 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import DemoShell from "../../components/demo/DemoShell.astro";
-import DemoGrid from "../../components/demo/DemoGrid.astro";
-import CodeSection from "../../components/CodeSection.astro";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DemoShell from '../../components/demo/DemoShell.astro';
+import DemoGrid from '../../components/demo/DemoGrid.astro';
+import CodeSection from '../../components/CodeSection.astro';
 
-import BridgeDescription from "../../components/patterns/bridge/BridgeDescription.astro";
-import BridgeDiagram from "../../components/patterns/bridge/BridgeDiagram.astro";
-import BridgeDemo from "../../components/patterns/bridge/BridgeDemo.astro";
+import BridgeDescription from './components/BridgeDescription.astro';
+import BridgeDiagram from './components/BridgeDiagram.astro';
+import BridgeDemo from './components/BridgeDemo.astro';
 
-import { meta } from "./meta";
+import { meta } from './meta';
 ---
 
 <BaseLayout title={meta.pageTitle}>
@@ -23,7 +23,7 @@ import { meta } from "./meta";
         idPrefix="bridge"
         title="Ejemplo del patrón (Bridge)"
         subtitle="Abstraction delega en Implementor para desacoplar dos jerarquías."
-        note='La clave: <code>Remote</code> no hereda de <code>TV</code>/<code>Radio</code>. En su lugar, <code>Remote</code> <b>compone</b> un <code>Device</code>.'
+        note="La clave: <code>Remote</code> no hereda de <code>TV</code>/<code>Radio</code>. En su lugar, <code>Remote</code> <b>compone</b> un <code>Device</code>."
         fileTs="bridge.ts"
         fileJs="bridge.js"
       />
@@ -31,7 +31,7 @@ import { meta } from "./meta";
 
     <script src="/vendor/prism-lite.js" is:inline></script>
     <script>
-      import "../../scripts/patterns/bridge-logic.js";
+      import './bridge-logic.js';
     </script>
 
     <script type="application/json" id="bridgeCodeTs">

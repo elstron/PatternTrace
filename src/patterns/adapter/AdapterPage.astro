@@ -1,14 +1,14 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import DemoShell from "../../components/demo/DemoShell.astro";
-import DemoGrid from "../../components/demo/DemoGrid.astro";
-import CodeSection from "../../components/CodeSection.astro";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DemoShell from '../../components/demo/DemoShell.astro';
+import DemoGrid from '../../components/demo/DemoGrid.astro';
+import CodeSection from '../../components/CodeSection.astro';
 
-import AdapterDescription from "../../components/patterns/adapter/AdapterDescription.astro";
-import AdapterDiagram from "../../components/patterns/adapter/AdapterDiagram.astro";
-import AdapterDemo from "../../components/patterns/adapter/AdapterDemo.astro";
+import AdapterDescription from './components/AdapterDescription.astro';
+import AdapterDiagram from './components/AdapterDiagram.astro';
+import AdapterDemo from './components/AdapterDemo.astro';
 
-import { meta } from "./meta";
+import { meta } from './meta';
 ---
 
 <BaseLayout title={meta.pageTitle}>
@@ -22,8 +22,8 @@ import { meta } from "./meta";
       <CodeSection
         idPrefix="adapter"
         title="Ejemplo del patrón (Adapter)"
-        subtitle='El cliente depende de <b>Target</b>. <b>Adapter</b> implementa Target y delega en <b>Adaptee</b>.'
-        note='En JS/TS lo clave es que <code>Adapter</code> tiene la misma interfaz que <code>Target</code> y traduce la llamada hacia <code>Adaptee</code>.'
+        subtitle="El cliente depende de <b>Target</b>. <b>Adapter</b> implementa Target y delega en <b>Adaptee</b>."
+        note="En JS/TS lo clave es que <code>Adapter</code> tiene la misma interfaz que <code>Target</code> y traduce la llamada hacia <code>Adaptee</code>."
         fileTs="adapter.ts"
         fileJs="adapter.js"
       />
@@ -31,7 +31,7 @@ import { meta } from "./meta";
 
     <script src="/vendor/prism-lite.js" is:inline></script>
     <script>
-        import "../../scripts/patterns/adapter-logic.js";
+      import './adapter-logic.js';
     </script>
 
     <!-- Código para el panel de ejemplo (Adapter). Lo lee adapter-logic.js -->
@@ -46,4 +46,4 @@ import { meta } from "./meta";
       }
     </script>
   </DemoShell>
-</BaseLayout> 
+</BaseLayout>
