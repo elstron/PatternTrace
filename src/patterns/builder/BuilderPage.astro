@@ -10,7 +10,10 @@ import CodeExamplePanel from '../_shared/components/CodeExamplePanel.astro';
 import { builderExample } from './code-examples.js';
 ---
 
-<BaseLayout title="Builder Pattern" description="Creational pattern: build complex objects step-by-step.">
+<BaseLayout
+  title="Builder Pattern"
+  description="Creational pattern: build complex objects step-by-step."
+>
   <DemoGrid>
     <BuilderDescription />
     <BuilderDiagram />
@@ -26,6 +29,6 @@ import { builderExample } from './code-examples.js';
   </DemoGrid>
 
   <script>
-    import './builder-logic.js';
+    import './logic.js';
   </script>
 </BaseLayout>

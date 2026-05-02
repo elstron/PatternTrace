@@ -1,3 +1,4 @@
+import { $, log } from "../../utils";
 /*
   Factory Method demo logic (vanilla JS)
   - Client uses Creator.someOperation()
@@ -7,16 +8,12 @@
 */
 
 (function factoryLogic() {
-  if (!document || !document.querySelector) return;
-  const $ = (sel) => document.querySelector(sel);
-
   // Guard: only run on Factory page
   if (!$("#btnRunFactory") || !$("#factoryFlowStage") || !$("#factoryFlowCanvas")) return;
 
   const btnRun = $("#btnRunFactory");
   const btnToggle = $("#btnToggleCreator");
   const resultEl = $("#factoryResult");
-  const logEl = $("#factoryLog");
 
   const creatorPillEl = $("#factoryCreatorPill");
   const callPillEl = $("#factoryCallPill");
@@ -27,15 +24,7 @@
 
   let creatorMode = "A"; // A | B
   let animToken = 0;
-
-  function log(line) {
-    if (!logEl) return;
-    const time = new Date().toLocaleTimeString();
-    const div = document.createElement("div");
-    div.innerHTML = `<span class="muted">[${time}]</span> ${line}`;
-    logEl.prepend(div);
-  }
-
+  
   function flash(el) {
     if (!el) return;
     el.classList.remove("flash");
@@ -318,5 +307,4 @@
   setCreatorState();
   resizeCanvas();
   drawBase();
-  // code panel handled in the Astro page
 })();

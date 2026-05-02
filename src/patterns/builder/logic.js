@@ -1,8 +1,4 @@
-function byId(id) {
-  const el = document.getElementById(id);
-  if (!el) throw new Error(`Missing element: #${id}`);
-  return el;
-}
+import { byId, log, sleep } from '../../utils';
 
 function fitCanvasToStage(canvas, stage) {
   const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
@@ -89,7 +85,6 @@ function initBuilder() {
   const btnRun = byId('btnRunBuilder');
   const btnToggle = byId('btnToggleBuilderVariant');
   const resultEl = byId('builderResult');
-  const logEl = byId('builderLog');
 
   const stage = byId('builderFlowStage');
   const canvas = byId('builderFlowCanvas');
@@ -109,16 +104,10 @@ function initBuilder() {
     variantPill.classList.add('flash');
     variantPill.classList.toggle('on', true);
     setTimeout(() => variantPill.classList.remove('flash'), 350);
-  builtParts = [];
+    builtParts = [];
     draw();
   }
 
-  function log(line, muted = false) {
-    const div = document.createElement('div');
-    if (muted) div.className = 'muted';
-    div.textContent = line;
-    logEl.prepend(div);
-  }
 
   function setActive(step) {
     activeStep = step;
@@ -148,7 +137,9 @@ function initBuilder() {
 
     const productSub = builtParts.length
       ? `parts: ${builtParts.join(' + ')}`
-      : (variant === 'minimal' ? 'House (minimal)' : 'House (luxury)');
+      : variant === 'minimal'
+        ? 'House (minimal)'
+        : 'House (luxury)';
     drawNode(ctx, x3, y, nodeW, nodeH, 'Product', productSub, accent);
 
     // Render "built parts" as little badges inside the Product box
@@ -192,24 +183,28 @@ function initBuilder() {
     ctx.fillText('Director orchestrates • Builder assembles • Product returned', 14, h - 14);
   }
 
-  function sleep(ms) {
-    return new Promise((r) => setTimeout(r, ms));
-  }
-
   async function run() {
-    logEl.innerHTML = '';
     resultEl.textContent = '…';
 
-  builtParts = [];
-  draw();
+    builtParts = [];
+    draw();
 
     log('Director: start build()', true);
     setActive('director->builder');
     await sleep(500);
 
-    const steps = variant === 'minimal'
-      ? ['reset()', 'setWalls()', 'setRoof()', 'setDoor()', 'getResult()']
-      : ['reset()', 'setWalls()', 'setRoof()', 'setDoor()', 'addPool()', 'addSolar()', 'getResult()'];
+    const steps =
+      variant === 'minimal'
+        ? ['reset()', 'setWalls()', 'setRoof()', 'setDoor()', 'getResult()']
+        : [
+            'reset()',
+            'setWalls()',
+            'setRoof()',
+            'setDoor()',
+            'addPool()',
+            'addSolar()',
+            'getResult()',
+          ];
 
     for (const s of steps) {
       log(`Builder: ${s}`);

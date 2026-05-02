@@ -1,3 +1,4 @@
+import { $, log } from "../../utils"; 
 /*
   Bridge demo logic (vanilla JS)
   - Abstraction delegates work to Implementor
@@ -9,10 +10,6 @@
 */
 
 (function bridgeLogic() {
-  if (!document || !document.querySelector) return;
-  const $ = (sel) => document.querySelector(sel);
-
-  // Guard: only run on Bridge page
   if (!$("#btnBridgeOperate") || !$("#bridgeFlowStage") || !$("#bridgeFlowCanvas")) return;
 
   const btnOperate = $("#btnBridgeOperate");
@@ -20,7 +17,6 @@
   const btnImpl = $("#btnBridgeToggleImpl");
 
   const resultEl = $("#bridgeResult");
-  const logEl = $("#bridgeLog");
 
   const absPill = $("#bridgeAbsPill");
   const implPill = $("#bridgeImplPill");
@@ -33,14 +29,6 @@
   let absMode = "Remote"; // Remote | AdvancedRemote
   let implMode = "TV"; // TV | Radio
   let animToken = 0;
-
-  function log(line) {
-    if (!logEl) return;
-    const time = new Date().toLocaleTimeString();
-    const div = document.createElement("div");
-    div.innerHTML = `<span class="muted">[${time}]</span> ${line}`;
-    logEl.prepend(div);
-  }
 
   function flash(el) {
     if (!el) return;

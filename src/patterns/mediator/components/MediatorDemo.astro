@@ -1,3 +1,7 @@
+---
+import Log from '../../_shared/components/Log.astro';
+---
+
 <section class="panel">
   <div class="title">
     <h2 style="margin:0; font-size:16px;">Demo (Mediator)</h2>
@@ -19,8 +23,7 @@
     <strong>Estado</strong>
     <span id="mediatorState" class="valuePill">loggedOut • items:0</span>
   </div>
-
-  <div id="mediatorLog" class="log"></div>
+  <Log />
 </section>
 
 <style>
@@ -28,12 +31,15 @@
     font-size: 12px;
     padding: 5px 9px;
     border-radius: 999px;
-    background: rgba(93, 214, 255, .10);
-    border: 1px solid rgba(93, 214, 255, .20);
-    color: rgba(93, 214, 255, .95);
+    background: rgba(93, 214, 255, 0.1);
+    border: 1px solid rgba(93, 214, 255, 0.2);
+    color: rgba(93, 214, 255, 0.95);
   }
 
-  .hint { color: var(--muted); font-size: 13px; }
+  .hint {
+    color: var(--muted);
+    font-size: 13px;
+  }
 
   .valueLine {
     display: flex;
@@ -41,8 +47,8 @@
     justify-content: space-between;
     gap: 12px;
     padding: 12px;
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
   }
 
@@ -55,25 +61,10 @@
   .valuePill {
     padding: 6px 10px;
     border-radius: 999px;
-    background: rgba(93, 214, 255, .10);
-    border: 1px solid rgba(93, 214, 255, .20);
-    color: rgba(93, 214, 255, .95);
+    background: rgba(93, 214, 255, 0.1);
+    border: 1px solid rgba(93, 214, 255, 0.2);
+    color: rgba(93, 214, 255, 0.95);
     font-weight: 800;
     font-size: 13px;
   }
-
-  .log {
-    margin-top: 12px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    font-size: 12px;
-    background: rgba(0,0,0,.22);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 12px;
-    padding: 10px;
-    color: rgba(230,238,252,.88);
-    max-height: 220px;
-    overflow: auto;
-  }
-
-  .log :global(.muted) { color: rgba(159,178,214,.85); }
 </style>

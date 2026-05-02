@@ -1,8 +1,4 @@
-function byId(id) {
-  const el = document.getElementById(id);
-  if (!el) throw new Error(`Missing element: #${id}`);
-  return el;
-}
+import { byId, log } from '../../utils';
 
 function fitCanvasToStage(canvas, stage) {
   const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
@@ -11,8 +7,6 @@ function fitCanvasToStage(canvas, stage) {
   const w = Math.max(1, Math.floor(rect.width));
   const h = Math.max(1, Math.floor(rect.height));
 
-  // The canvas is already sized in CSS (100% x 100%).
-  // Only update the internal pixel buffer when needed to avoid ResizeObserver loops.
   const nextW = w * dpr;
   const nextH = h * dpr;
   if (canvas.width !== nextW) canvas.width = nextW;
@@ -89,7 +83,6 @@ function initPrototype() {
   const btnRun = byId('btnRunPrototype');
   const btnToggle = byId('btnToggleCloneMode');
   const resultEl = byId('prototypeResult');
-  const logEl = byId('prototypeLog');
 
   const stage = byId('prototypeFlowStage');
   const canvas = byId('prototypeFlowCanvas');
@@ -101,13 +94,6 @@ function initPrototype() {
   let active = 'idle';
   let protoState = { id: 1, title: 'Doc', tags: ['base'] };
   let cloneState = null;
-
-  function log(line, muted = false) {
-    const div = document.createElement('div');
-    if (muted) div.className = 'muted';
-    div.textContent = line;
-    logEl.prepend(div);
-  }
 
   function setCloneOn(next) {
     cloneOn = next;
@@ -175,7 +161,6 @@ function initPrototype() {
   }
 
   async function run() {
-    logEl.innerHTML = '';
     resultEl.textContent = '…';
 
     // Fresh prototype every run, deterministic ids

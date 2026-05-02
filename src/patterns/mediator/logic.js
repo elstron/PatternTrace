@@ -1,8 +1,4 @@
-function byId(id) {
-  const el = document.getElementById(id);
-  if (!el) throw new Error(`Missing element: #${id}`);
-  return el;
-}
+import { byId, log } from '../../utils';
 
 function fitCanvasToStage(canvas, stage) {
   const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
@@ -89,7 +85,6 @@ function initMediator() {
   const btnReset = byId('btnMediatorReset');
 
   const stateEl = byId('mediatorState');
-  const logEl = byId('mediatorLog');
 
   const stage = byId('mediatorFlowStage');
   const canvas = byId('mediatorFlowCanvas');
@@ -101,13 +96,6 @@ function initMediator() {
   let loggedIn = false;
   let items = 0;
   let lastEvent = 'idle';
-
-  function log(line, muted = false) {
-    const div = document.createElement('div');
-    if (muted) div.className = 'muted';
-    div.textContent = line;
-    logEl.prepend(div);
-  }
 
   function setEvent(ev) {
     lastEvent = ev;
@@ -130,7 +118,7 @@ function initMediator() {
     const { ctx, w, h } = fitCanvasToStage(canvas, stage);
     ctx.clearRect(0, 0, w, h);
 
-    const nodeW = Math.min(210, Math.max(150, Math.floor(w * 0.30)));
+    const nodeW = Math.min(210, Math.max(150, Math.floor(w * 0.3)));
     const nodeH = 62;
     const gap = Math.max(18, Math.floor((w - nodeW * 3) / 4));
     const yTop = 22;
@@ -144,7 +132,17 @@ function initMediator() {
     const activeCart = lastEvent === 'cart:add' || lastEvent === 'cart:clear';
     const activeMed = lastEvent !== 'idle';
 
-    drawNode(ctx, x1, yTop, nodeW, nodeH, 'Header', loggedIn ? 'user: ON' : 'user: OFF', accent, activeHeader);
+    drawNode(
+      ctx,
+      x1,
+      yTop,
+      nodeW,
+      nodeH,
+      'Header',
+      loggedIn ? 'user: ON' : 'user: OFF',
+      accent,
+      activeHeader,
+    );
     drawNode(ctx, x3, yTop, nodeW, nodeH, 'Cart', `items: ${items}`, accent, activeCart);
     drawNode(ctx, x2, yBottom, nodeW, nodeH, 'Mediator', 'notify(event)', accent, activeMed);
 
@@ -154,7 +152,8 @@ function initMediator() {
 
     // mediator -> colleagues (reaction)
     const reacting = lastEvent === 'logout' || lastEvent === 'login';
-    const reactingCart = lastEvent === 'logout' || lastEvent === 'cart:add' || lastEvent === 'cart:clear';
+    const reactingCart =
+      lastEvent === 'logout' || lastEvent === 'cart:add' || lastEvent === 'cart:clear';
     drawArrow(ctx, x2 + nodeW / 2, yBottom, x1 + nodeW / 2, yTop + nodeH, accent, reacting);
     drawArrow(ctx, x2 + nodeW / 2, yBottom, x3 + nodeW / 2, yTop + nodeH, accent, reactingCart);
 
@@ -169,7 +168,6 @@ function initMediator() {
     loggedIn = false;
     items = 0;
     lastEvent = 'idle';
-    logEl.innerHTML = '';
     updateState();
     modePill.textContent = 'mode: mediated';
     modePill.classList.add('on');
@@ -216,16 +214,30 @@ function initMediator() {
     draw();
   }
 
-  const header = { clickLogin: () => notify(header, 'login'), clickLogout: () => notify(header, 'logout') };
+  const header = {
+    clickLogin: () => notify(header, 'login'),
+    clickLogout: () => notify(header, 'logout'),
+  };
   const cart = { add: () => notify(cart, 'cart:add'), clear: () => notify(cart, 'cart:clear') };
 
-  btnLogin.addEventListener('click', (e) => { e.preventDefault(); header.clickLogin(); });
-  btnLogout.addEventListener('click', (e) => { e.preventDefault(); header.clickLogout(); });
-  btnAdd.addEventListener('click', (e) => { e.preventDefault(); cart.add(); });
-  btnReset.addEventListener('click', (e) => { e.preventDefault(); reset(); });
+  btnLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    header.clickLogin();
+  });
+  btnLogout.addEventListener('click', (e) => {
+    e.preventDefault();
+    header.clickLogout();
+  });
+  btnAdd.addEventListener('click', (e) => {
+    e.preventDefault();
+    cart.add();
+  });
+  btnReset.addEventListener('click', (e) => {
+    e.preventDefault();
+    reset();
+  });
 
   btnAdd.addEventListener('contextmenu', (e) => {
-    // Right-click to clear as a tiny easter egg
     e.preventDefault();
     cart.clear();
   });

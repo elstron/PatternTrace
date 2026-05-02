@@ -1,3 +1,4 @@
+import { $, log } from '../../utils';
 /*
   Observer demo logic (vanilla JS)
   - Keeps index.astro clean: only loads Prism + this script
@@ -6,9 +7,7 @@
 
 (function observerLogic() {
   // Guard: only run on the page that has the demo markup.
-  if (!document || !document.querySelector) return;
-  const $ = (sel) => document.querySelector(sel);
-  if (!$("#flowStage") || !$("#observerList") || !$("#btnUpdate")) return;
+  if (!$('#flowStage') || !$('#observerList') || !$('#btnUpdate')) return;
 
   // ====== Contrato (versión simple) ======
   // Subject:
@@ -17,11 +16,15 @@
   // - update(state)
   class Subject {
     constructor() {
-      this.state = "";
+      this.state = '';
       this.observers = new Set();
     }
-    attach(observer) { this.observers.add(observer); }
-    detach(observer) { this.observers.delete(observer); }
+    attach(observer) {
+      this.observers.add(observer);
+    }
+    detach(observer) {
+      this.observers.delete(observer);
+    }
     setState(newState) {
       this.state = newState;
       this.notify();
@@ -36,78 +39,71 @@
       this.name = name;
       this.onUpdate = onUpdate;
     }
-    update(state) { this.onUpdate(state); }
+    update(state) {
+      this.onUpdate(state);
+    }
   }
 
   // ====== UI wiring ======
   const subject = new Subject();
 
-  const logEl = $("#log");
-  const currentValueEl = $("#currentValue");
-  const observerListEl = $("#observerList");
+  const currentValueEl = $('#currentValue');
+  const observerListEl = $('#observerList');
 
-  const subjectPillEl = $("#subjectPill");
-  const notifyPillEl = $("#notifyPill");
-  const obsCountPillEl = $("#obsCountPill");
-  const flowStageEl = $("#flowStage");
-  const canvasEl = $("#flowCanvas");
-  const ctx = canvasEl?.getContext?.("2d");
-
-  function log(line) {
-    if (!logEl) return;
-    const time = new Date().toLocaleTimeString();
-    const div = document.createElement("div");
-    div.innerHTML = `<span class="muted">[${time}]</span> ${line}`;
-    logEl.prepend(div);
-  }
+  const subjectPillEl = $('#subjectPill');
+  const notifyPillEl = $('#notifyPill');
+  const obsCountPillEl = $('#obsCountPill');
+  const flowStageEl = $('#flowStage');
+  const canvasEl = $('#flowCanvas');
+  const ctx = canvasEl?.getContext?.('2d');
 
   function flash(el) {
     if (!el) return;
-    el.classList.remove("flash");
+    el.classList.remove('flash');
     // reflow
     void el.offsetWidth;
-    el.classList.add("flash");
+    el.classList.add('flash');
   }
 
   const observerModels = [
-    { name: "Observer A (Dashboard)", active: true, last: "(sin datos)" },
-    { name: "Observer B (Email service)", active: true, last: "(sin datos)" },
-    { name: "Observer C (Mobile widget)", active: false, last: "(sin datos)" },
+    { name: 'Observer A (Dashboard)', active: true, last: '(sin datos)' },
+    { name: 'Observer B (Email service)', active: true, last: '(sin datos)' },
+    { name: 'Observer C (Mobile widget)', active: false, last: '(sin datos)' },
   ];
 
   const runtime = new Map(); // name -> { observer, elements... }
 
   function renderObservers() {
     if (!observerListEl) return;
-    observerListEl.innerHTML = "";
+    observerListEl.innerHTML = '';
 
     observerModels.forEach((m) => {
-      const card = document.createElement("div");
-      card.className = "card";
+      const card = document.createElement('div');
+      card.className = 'card';
 
-      const header = document.createElement("div");
-      header.className = "cardHeader";
+      const header = document.createElement('div');
+      header.className = 'cardHeader';
 
-      const left = document.createElement("div");
+      const left = document.createElement('div');
       left.innerHTML = `<b>${m.name}</b>`;
 
-      const status = document.createElement("span");
-      status.className = "status" + (m.active ? " on" : "");
-      status.textContent = m.active ? "suscrito" : "desuscrito";
+      const status = document.createElement('span');
+      status.className = 'status' + (m.active ? ' on' : '');
+      status.textContent = m.active ? 'suscrito' : 'desuscrito';
 
       header.appendChild(left);
       header.appendChild(status);
 
-      const msg = document.createElement("div");
-      msg.className = "msg";
+      const msg = document.createElement('div');
+      msg.className = 'msg';
       msg.textContent = m.last;
 
-      const row = document.createElement("div");
-      row.className = "row";
-      row.style.marginTop = "10px";
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.style.marginTop = '10px';
 
-      const btnToggle = document.createElement("button");
-      btnToggle.textContent = m.active ? "Detach()" : "Attach()";
+      const btnToggle = document.createElement('button');
+      btnToggle.textContent = m.active ? 'Detach()' : 'Attach()';
 
       row.appendChild(btnToggle);
 
@@ -120,7 +116,7 @@
       let entry = runtime.get(m.name);
       if (!entry) {
         const observer = new Observer(m.name, (state) => {
-          m.last = `Recibí: "${state || "(vacío)"}"`;
+          m.last = `Recibí: "${state || '(vacío)'}"`;
           msg.textContent = m.last;
           flash(card);
           log(`<span style="color:#5dd6ff">${m.name}</span> recibió update(state)`);
@@ -154,14 +150,14 @@
     });
 
     // actualizar contador en el diagrama
-    const count = observerModels.filter(o => o.active).length;
-    if (obsCountPillEl) obsCountPillEl.textContent = `${count} suscrito${count === 1 ? "" : "s"}`;
+    const count = observerModels.filter((o) => o.active).length;
+    if (obsCountPillEl) obsCountPillEl.textContent = `${count} suscrito${count === 1 ? '' : 's'}`;
   }
 
   function setNotifyState(text, isActive) {
     if (!notifyPillEl) return;
     notifyPillEl.textContent = text;
-    notifyPillEl.classList.toggle("on", !!isActive);
+    notifyPillEl.classList.toggle('on', !!isActive);
   }
 
   // ====== Canvas flow diagram ======
@@ -190,7 +186,7 @@
   function drawArrow(c, x1, y1, x2, y2, color, width) {
     c.strokeStyle = color;
     c.lineWidth = width;
-    c.lineCap = "round";
+    c.lineCap = 'round';
     c.beginPath();
     c.moveTo(x1, y1);
     c.lineTo(x2, y2);
@@ -201,13 +197,21 @@
     c.fillStyle = color;
     c.beginPath();
     c.moveTo(x2, y2);
-    c.lineTo(x2 - headLen * Math.cos(ang - Math.PI / 7), y2 - headLen * Math.sin(ang - Math.PI / 7));
-    c.lineTo(x2 - headLen * Math.cos(ang + Math.PI / 7), y2 - headLen * Math.sin(ang + Math.PI / 7));
+    c.lineTo(
+      x2 - headLen * Math.cos(ang - Math.PI / 7),
+      y2 - headLen * Math.sin(ang - Math.PI / 7),
+    );
+    c.lineTo(
+      x2 - headLen * Math.cos(ang + Math.PI / 7),
+      y2 - headLen * Math.sin(ang + Math.PI / 7),
+    );
     c.closePath();
     c.fill();
   }
 
-  function lerp(a, b, t) { return a + (b - a) * t; }
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
 
   function getLayout() {
     // Work in CSS pixels because we scale the context with DPR.
@@ -237,15 +241,20 @@
         w: obsW,
         h: 46,
         active: o.active,
-        label: o.name.replace(/\s*\(.*\)\s*/g, "")
+        label: o.name.replace(/\s*\(.*\)\s*/g, ''),
       }));
 
-      return { w, h, subject: subjectBox, notify: notifyBox, observers, mode: "h" };
+      return { w, h, subject: subjectBox, notify: notifyBox, observers, mode: 'h' };
     }
 
     // Mobile: Subject (top) -> notify (middle) -> observers (bottom, 3 tiles aligned)
     const subjectBox = { x: pad, y: pad, w: Math.max(240, w - pad * 2), h: 56 };
-    const notifyBox = { x: pad, y: subjectBox.y + subjectBox.h + 10, w: Math.max(240, w - pad * 2), h: 52 };
+    const notifyBox = {
+      x: pad,
+      y: subjectBox.y + subjectBox.h + 10,
+      w: Math.max(240, w - pad * 2),
+      h: 52,
+    };
 
     const obsCount = observerModels.length;
     const gap = 10;
@@ -253,10 +262,7 @@
     // 3-up tiles. Keep them square.
     const availableW = w - pad * 2;
     const tile = Math.max(46, Math.floor((availableW - gap * (obsCount - 1)) / obsCount));
-    const obsY = Math.min(
-      notifyBox.y + notifyBox.h + 14,
-      h - pad - tile
-    );
+    const obsY = Math.min(notifyBox.y + notifyBox.h + 14, h - pad - tile);
 
     const startX = pad + Math.max(0, (availableW - (tile * obsCount + gap * (obsCount - 1))) / 2);
     const observers = observerModels.map((o, i) => ({
@@ -265,10 +271,10 @@
       w: tile,
       h: tile,
       active: o.active,
-      label: o.name.replace(/\s*\(.*\)\s*/g, "")
+      label: o.name.replace(/\s*\(.*\)\s*/g, ''),
     }));
 
-    return { w, h, subject: subjectBox, notify: notifyBox, observers, mode: "v" };
+    return { w, h, subject: subjectBox, notify: notifyBox, observers, mode: 'v' };
   }
 
   function drawBase() {
@@ -278,8 +284,8 @@
 
     // subtle backdrop fade (matches the stage)
     const grad = ctx.createLinearGradient(0, 0, w, h);
-    grad.addColorStop(0, "rgba(93,214,255,0.04)");
-    grad.addColorStop(1, "rgba(92,255,138,0.02)");
+    grad.addColorStop(0, 'rgba(93,214,255,0.04)');
+    grad.addColorStop(1, 'rgba(92,255,138,0.02)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
 
@@ -292,29 +298,29 @@
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      ctx.fillStyle = "rgba(230,238,252,.92)";
-      ctx.font = "600 13px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu";
+      ctx.fillStyle = 'rgba(230,238,252,.92)';
+      ctx.font = '600 13px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu';
       ctx.fillText(title, box.x + 12, box.y + 28);
 
       if (sub) {
-        ctx.fillStyle = "rgba(159,178,214,.9)";
-        ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu";
+        ctx.fillStyle = 'rgba(159,178,214,.9)';
+        ctx.font = '12px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu';
         ctx.fillText(sub, box.x + 12, box.y + 48);
       }
     }
 
-    drawNode(subjectBox, "Subject", "state", "rgba(92,255,138,.06)", "rgba(92,255,138,.22)");
-    drawNode(notifyBox, "notify()", "update(state)", "rgba(0,0,0,.12)", "rgba(255,255,255,.14)");
+    drawNode(subjectBox, 'Subject', 'state', 'rgba(92,255,138,.06)', 'rgba(92,255,138,.22)');
+    drawNode(notifyBox, 'notify()', 'update(state)', 'rgba(0,0,0,.12)', 'rgba(255,255,255,.14)');
 
     observers.forEach((o) => {
-      const fill = o.active ? "rgba(93,214,255,.06)" : "rgba(255,255,255,.03)";
-      const stroke = o.active ? "rgba(93,214,255,.20)" : "rgba(255,255,255,.10)";
-      drawNode(o, o.label, o.active ? "suscrito" : "desuscrito", fill, stroke);
+      const fill = o.active ? 'rgba(93,214,255,.06)' : 'rgba(255,255,255,.03)';
+      const stroke = o.active ? 'rgba(93,214,255,.20)' : 'rgba(255,255,255,.10)';
+      drawNode(o, o.label, o.active ? 'suscrito' : 'desuscrito', fill, stroke);
     });
 
     // edges
-    const baseColor = "rgba(159,178,214,.35)";
-    if (mode === "v") {
+    const baseColor = 'rgba(159,178,214,.35)';
+    if (mode === 'v') {
       const sBot = { x: subjectBox.x + subjectBox.w / 2, y: subjectBox.y + subjectBox.h };
       const nTop = { x: notifyBox.x + notifyBox.w / 2, y: notifyBox.y };
       drawArrow(ctx, sBot.x, sBot.y + 6, nTop.x, nTop.y - 6, baseColor, 2.2);
@@ -340,23 +346,27 @@
   let animToken = 0;
   async function animateNotifyFlow() {
     const token = ++animToken;
-    setNotifyState("notifying…", true);
+    setNotifyState('notifying…', true);
 
     // Respect reduced motion
-    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const { subject: subjectBox, notify: notifyBox, observers, mode } = getLayout();
 
     // Endpoints depend on layout mode
-    const s1 = mode === "v"
-      ? { x: subjectBox.x + subjectBox.w / 2, y: subjectBox.y + subjectBox.h }
-      : { x: subjectBox.x + subjectBox.w, y: subjectBox.y + subjectBox.h / 2 };
-    const n1 = mode === "v"
-      ? { x: notifyBox.x + notifyBox.w / 2, y: notifyBox.y }
-      : { x: notifyBox.x, y: notifyBox.y + notifyBox.h / 2 };
-    const n2 = mode === "v"
-      ? { x: notifyBox.x + notifyBox.w / 2, y: notifyBox.y + notifyBox.h }
-      : { x: notifyBox.x + notifyBox.w, y: notifyBox.y + notifyBox.h / 2 };
+    const s1 =
+      mode === 'v'
+        ? { x: subjectBox.x + subjectBox.w / 2, y: subjectBox.y + subjectBox.h }
+        : { x: subjectBox.x + subjectBox.w, y: subjectBox.y + subjectBox.h / 2 };
+    const n1 =
+      mode === 'v'
+        ? { x: notifyBox.x + notifyBox.w / 2, y: notifyBox.y }
+        : { x: notifyBox.x, y: notifyBox.y + notifyBox.h / 2 };
+    const n2 =
+      mode === 'v'
+        ? { x: notifyBox.x + notifyBox.w / 2, y: notifyBox.y + notifyBox.h }
+        : { x: notifyBox.x + notifyBox.w, y: notifyBox.y + notifyBox.h / 2 };
 
     function drawPulse(x1, y1, x2, y2, t) {
       if (!ctx) return;
@@ -364,9 +374,9 @@
       const y = lerp(y1, y2, t);
       ctx.beginPath();
       ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(93,214,255,.95)";
+      ctx.fillStyle = 'rgba(93,214,255,.95)';
       ctx.fill();
-      ctx.shadowColor = "rgba(93,214,255,.35)";
+      ctx.shadowColor = 'rgba(93,214,255,.35)';
       ctx.shadowBlur = 10;
       ctx.fill();
       ctx.shadowBlur = 0;
@@ -374,7 +384,7 @@
 
     if (reduce) {
       drawBase();
-      setNotifyState("idle", false);
+      setNotifyState('idle', false);
       return;
     }
 
@@ -386,7 +396,7 @@
         if (token !== animToken) return resolve();
         const t = Math.min(1, (now - start) / dur);
         drawBase();
-        if (mode === "v") drawPulse(s1.x, s1.y + 6, n1.x, n1.y - 6, t);
+        if (mode === 'v') drawPulse(s1.x, s1.y + 6, n1.x, n1.y - 6, t);
         else drawPulse(s1.x + 6, s1.y, n1.x - 6, n1.y, t);
         if (t < 1) requestAnimationFrame(frame);
         else resolve();
@@ -404,14 +414,12 @@
       await new Promise((resolve) => {
         const start = performance.now();
         const dur = 320;
-        const oTarget = mode === "v"
-          ? { x: o.x + o.w / 2, y: o.y }
-          : { x: o.x, y: o.y + o.h / 2 };
+        const oTarget = mode === 'v' ? { x: o.x + o.w / 2, y: o.y } : { x: o.x, y: o.y + o.h / 2 };
         function frame(now) {
           if (token !== animToken) return resolve();
           const t = Math.min(1, (now - start) / dur);
           drawBase();
-          if (mode === "v") drawPulse(n2.x, n2.y + 6, oTarget.x, oTarget.y - 6, t);
+          if (mode === 'v') drawPulse(n2.x, n2.y + 6, oTarget.x, oTarget.y - 6, t);
           else drawPulse(n2.x + 6, n2.y, oTarget.x - 6, oTarget.y, t);
           if (t < 1) requestAnimationFrame(frame);
           else resolve();
@@ -424,17 +432,17 @@
     }
 
     drawBase();
-    setNotifyState("idle", false);
+    setNotifyState('idle', false);
   }
 
   function setStateFromUI(value) {
-    const v = (value ?? "").trim();
+    const v = (value ?? '').trim();
     if (currentValueEl) {
-      currentValueEl.textContent = v || "(vacío)";
+      currentValueEl.textContent = v || '(vacío)';
       flash(currentValueEl);
     }
 
-    if (subjectPillEl) subjectPillEl.textContent = v ? `state: ${v}` : "state";
+    if (subjectPillEl) subjectPillEl.textContent = v ? `state: ${v}` : 'state';
     log(`<span style="color:#5cff8a">Subject</span> cambió state y llamó notify()`);
 
     // animación de diagrama (no bloquea la lógica del patrón)
@@ -442,187 +450,34 @@
     subject.setState(v);
   }
 
-  $("#btnUpdate").onclick = () => setStateFromUI($("#newValue").value);
-  $("#btnRandom").onclick = () => {
-    const samples = ["Precio: 120", "Stock: 5", "Modo: mantenimiento", "Usuario: Alice", "Error: timeout"];
+  $('#btnUpdate').onclick = () => setStateFromUI($('#newValue').value);
+  $('#btnRandom').onclick = () => {
+    const samples = [
+      'Precio: 120',
+      'Stock: 5',
+      'Modo: mantenimiento',
+      'Usuario: Alice',
+      'Error: timeout',
+    ];
     const value = samples[Math.floor(Math.random() * samples.length)];
-    $("#newValue").value = value;
+    $('#newValue').value = value;
     setStateFromUI(value);
   };
-  $("#btnClearLog").onclick = () => { if (logEl) logEl.innerHTML = ""; };
+  $('#btnClearLog').onclick = () => {
+    if (logEl) logEl.innerHTML = '';
+  };
 
   // init
   resizeCanvas();
   renderObservers();
   drawBase();
-  log(`Listo. Cambia el estado del <span style="color:#5cff8a">Subject</span> para ver notificaciones.`);
+  log(
+    `Listo. Cambia el estado del <span style="color:#5cff8a">Subject</span> para ver notificaciones.`,
+  );
 
   // keep canvas sized and diagram redrawn
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     resizeCanvas();
     drawBase();
-  });
-
-  // ====== Sección de código (TS/JS) ======
-  function initCodeSection(prefix, sources) {
-    const p = prefix ? `${prefix}-` : "";
-    const codeBlockEl = $(`#${p}codeBlock`);
-    const codeCaptionEl = $(`#${p}codeCaption`);
-    const tabTsEl = $(`#${p}tabTs`);
-    const tabJsEl = $(`#${p}tabJs`);
-    const btnCopyCodeEl = $(`#${p}btnCopyCode`);
-
-    // If markup isn't present, do nothing.
-    if (!codeBlockEl || !tabTsEl || !tabJsEl) return;
-
-    let activeLang = "ts";
-    function renderCode() {
-      const isTS = activeLang === "ts";
-      tabTsEl?.classList.toggle("active", isTS);
-      tabJsEl?.classList.toggle("active", !isTS);
-      if (codeCaptionEl) codeCaptionEl.textContent = isTS ? sources.fileTs : sources.fileJs;
-      const raw = isTS ? sources.ts : sources.js;
-
-      // set language for Prism
-      const langClass = isTS ? "language-typescript" : "language-javascript";
-      codeBlockEl.classList.remove("language-typescript", "language-javascript");
-      codeBlockEl.classList.add(langClass);
-      const pre = codeBlockEl.closest("pre");
-      pre?.classList.remove("language-typescript", "language-javascript");
-      pre?.classList.add(langClass);
-
-      codeBlockEl.textContent = raw;
-      if (window.Prism && typeof window.Prism.highlightElement === "function") {
-        window.Prism.highlightElement(codeBlockEl);
-      }
-    }
-
-    tabTsEl?.addEventListener("click", () => { activeLang = "ts"; renderCode(); });
-    tabJsEl?.addEventListener("click", () => { activeLang = "js"; renderCode(); });
-
-    btnCopyCodeEl?.addEventListener("click", async () => {
-      const text = activeLang === "ts" ? sources.ts : sources.js;
-      try {
-        await navigator.clipboard.writeText(text);
-        btnCopyCodeEl.textContent = "Copiado";
-        setTimeout(() => (btnCopyCodeEl.textContent = "Copiar código"), 900);
-      } catch {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        btnCopyCodeEl.textContent = "Copiado";
-        setTimeout(() => (btnCopyCodeEl.textContent = "Copiar código"), 900);
-      }
-    });
-
-    renderCode();
-  }
-
-  const codeTS = `// observer.ts
-// Contrato:
-// - Subject mantiene estado y notifica a Observers
-// - Observer reacciona a update(state)
-
-type Observer<T> = {
-  update(state: T): void;
-};
-
-class Subject<T> {
-  private observers = new Set<Observer<T>>();
-  private state!: T;
-
-  attach(o: Observer<T>) {
-    this.observers.add(o);
-  }
-
-  detach(o: Observer<T>) {
-    this.observers.delete(o);
-  }
-
-  setState(next: T) {
-    this.state = next;
-    this.notify();
-  }
-
-  notify() {
-    for (const o of this.observers) o.update(this.state);
-  }
-}
-
-// ---- Demo de uso ----
-const subject = new Subject<string>();
-
-const dashboard: Observer<string> = {
-  update: (s) => console.log("Dashboard:", s),
-};
-const email: Observer<string> = {
-  update: (s) => console.log("Email service:", s),
-};
-
-subject.attach(dashboard);
-subject.attach(email);
-
-subject.setState("Precio: 120");
-subject.detach(email);
-subject.setState("Stock: 5");
-`;
-
-  const codeJS = `// observer.js
-// Subject (Observable)
-class Subject {
-  constructor() {
-    this.state = "";
-    this.observers = new Set();
-  }
-
-  attach(observer) {
-    this.observers.add(observer);
-  }
-
-  detach(observer) {
-    this.observers.delete(observer);
-  }
-
-  setState(next) {
-    this.state = next;
-    this.notify();
-  }
-
-  notify() {
-    for (const o of this.observers) o.update(this.state);
-  }
-}
-
-// Observer
-class Observer {
-  constructor(name) {
-    this.name = name;
-  }
-  update(state) {
-    console.log(this.name + ":", state);
-  }
-}
-
-// ---- Demo de uso ----
-const subject = new Subject();
-const dashboard = new Observer("Dashboard");
-const email = new Observer("Email service");
-
-subject.attach(dashboard);
-subject.attach(email);
-
-subject.setState("Precio: 120");
-subject.detach(email);
-subject.setState("Stock: 5");
-`;
-
-  initCodeSection("", {
-    ts: codeTS,
-    js: codeJS,
-    fileTs: "observer.ts",
-    fileJs: "observer.js",
   });
 })();
